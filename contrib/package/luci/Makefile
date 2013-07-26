@@ -7,7 +7,8 @@ ifeq ($(DUMP),)
 endif
 
 PKG_NAME:=luci
-PKG_RELEASE:=1
+PKG_RELEASE:=2
+### fixed package release for luci-bismark - Sarthak 7/28/2013
 
 PKG_BUILD_PARALLEL:=0
 
@@ -463,6 +464,28 @@ $(eval $(call application,transmission,LuCI Support for Transmission,\
 
 $(eval $(call application,watchcat,LuCI Support for Watchcat,\
 	+PACKAGE_luci-app-watchcat:watchcat))
+
+### added for luci-bismark - Sarthak 7/28/2013
+$(eval $(call application,bismark-experiments-manager,Bismark experiments manager,+bismark-experiments-manager))
+define Package/luci-app-bismark-experiments-manager/postinst
+#!/bin/sh
+rm -f /tmp/luci-indexcache
+endef
+define Package/luci-app-bismark-experiments-manager/prerm
+#!/bin/sh
+rm -f /tmp/luci-indexcache
+endef
+
+$(eval $(call application,bismark-passive,Bismark passive,+bismark-passive))
+define Package/luci-app-bismark-passive/postinst
+#!/bin/sh
+rm -f /tmp/luci-indexcache
+endef
+define Package/luci-app-bismark-passive/prerm
+#!/bin/sh
+rm -f /tmp/luci-indexcache
+endef
+
 
 ### Server Gateway Interfaces ###
 define sgi
